@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './services/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -8,12 +10,12 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        loadComponent: () =>
-            import('./login/login.component').then((m) => m.LoginComponent),
+        component: LoginComponent,
+        pathMatch: 'full'
     },
     {
         path: 'dashboard',
-        loadComponent: () =>
-            import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
+        component: DashboardComponent,
+        canActivate: [AuthGuard]
     }
 ];

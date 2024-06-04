@@ -1,6 +1,11 @@
 <ul class="w-48 w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
-    <li class="px-4 py-2 border-b border-gray-200 rounded-t-lg">Table 1</li>
-    <li class="px-4 py-2 border-b border-gray-200">Table 2</li>
-    <li class="px-4 py-2 border-b border-gray-200">Table 3</li>
-    <li class="px-4 py-2 rounded-b-lg">Table 3</li>
+  @for (listItem of list.data; track $index) {
+  <li class="px-4 py-2 border-b border-gray-200 w-full flex flex-wrap items-center justify-between rounded-t-lg">
+    <a href="" class="text-left font-small text-blue-600 hover:underline"
+      (click)="getFileContent(listItem.id); false">{{listItem.fileName}}</a>
+    <span class="text-right text-xs font-normal">{{listItem.createdAt | date}}</span>
+  </li>
+  }
 </ul>
+
+<pagination [pageData]="list" (pageChanged)="pageChange($event)"></pagination>

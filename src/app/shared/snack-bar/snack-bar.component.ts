@@ -19,10 +19,4 @@ export class SnackBarComponent {
       this.show = true;
     }, 10000);
   }
-
-  ngOnInit() {
-    console.log('snackbar')
-  }
-  ngOnChanges() {
-  }
 }

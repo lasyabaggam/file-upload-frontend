@@ -13,8 +13,7 @@ import { CommonService } from './services/common.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'file-upload-frontend';
-
+  
   constructor(public commonService: CommonService) {}
   
   ngOnIt(): void {

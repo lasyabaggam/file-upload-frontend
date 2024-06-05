@@ -12,7 +12,6 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
       else if (error.error.code === 500)
         common.openSnackBar(`500 Server Error, Please try again`)
       else{
-      console.log('I am here')
         common.openSnackBar(`An error occured, please try again!`)
       }
       return throwError(error);

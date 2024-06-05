@@ -15,26 +15,27 @@ export class FileService {
   sortOrder: string = 'asc';
   sortColumn: string = 'id';
 
-  constructor(private apiService: ApiService, private commonService: CommonService) {}
+  constructor(private apiService: ApiService, private commonService: CommonService) { }
 
   getFileList(params?: Params): void {
-    params = {...params};
+    params = { ...params };
     params.limit = 10;
     this.apiService
-      .get('files', {params})
-      .subscribe((response) =>{
-         this.files.next(response);
-         this.fetchFileContent(response.data[0].id);
+      .get('files', { params })
+      .subscribe((response) => {
+        this.files.next(response);
+        if (response.data.length)
+          this.fetchFileContent(response.data[0].id);
       });
   }
 
   fetchFileContent(id: number, params?: Params): void {
     const files = this.files.getValue();
     this.currentFileData = files.data.find((res: any) => res.id === id);
-    params = {...params};
+    params = { ...params };
     params.limit = 10;
     this.apiService
-      .get(`files/${id}/contents`, {params})
+      .get(`files/${id}/contents`, { params })
       .subscribe((response) => {
         this.fetchFileHeaders(response.data);
         this.fileContent.next(response)
@@ -51,7 +52,7 @@ export class FileService {
           this.commonService.openSnackBar('File uploaded successfully');
         }
       }
-    );
+      );
   }
 
   setFileContentParams(options: any) {
@@ -67,8 +68,8 @@ export class FileService {
     if (this.sortColumn === sortData)
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     else {
-        this.sortColumn = sortData;
-        this.sortOrder = 'asc';
+      this.sortColumn = sortData;
+      this.sortOrder = 'asc';
     }
     return `${this.sortColumn}:${this.sortOrder}`;
   }

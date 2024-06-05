@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://relative-primarily-rabbit.ngrok-free.app',
+  apiUrl: 'https://main-bvxea6i-tw5hbbvegtn3e.us.platformsh.site',
 };

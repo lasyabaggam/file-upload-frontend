@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { CommonService } from '../services/common.service';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../interfaces/user';
 
 @Component({
@@ -13,17 +12,20 @@ import { User } from '../interfaces/user';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  userdata : User = {
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
-  }
+  loginForm: FormGroup<User>;
+  errorMessage: string | null = null;
   hide = true;
 
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private commonService: CommonService
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   clickEvent(event: MouseEvent) {
     this.hide = !this.hide;
@@ -31,11 +33,16 @@ export class LoginComponent {
   }
 
   login(): void {
-    if (!this.userdata.username || !this.userdata.password) return;
-    const username = this.commonService.modifyReqValue(this.userdata.username.value);
-    const password = this.commonService.modifyReqValue(this.userdata.password.value);
-    this.loginService.login(username, password).subscribe((response) => {
-      if (response.token) this.router.navigate(['/dashboard']);
-    });
+    if (this.loginForm.valid) {
+      const { username, password } = this.loginForm.value;
+      this.loginService.login(username, password).subscribe({
+          next: (response) => {
+            if (response.token) this.router.navigate(['/dashboard']);
+          },
+          error: () => {
+            this.errorMessage = 'Invalid username or password';
+          }
+        });
+    }  
   }
 }

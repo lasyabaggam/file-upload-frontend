@@ -11,11 +11,11 @@ import { CommonService } from '../../services/common.service';
 })
 export class FileUploadComponent {
   file: File;
-  
+
   constructor(
     private fileService: FileService,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   onUpload(event: any): void {
     this.file = event.target.files[0];

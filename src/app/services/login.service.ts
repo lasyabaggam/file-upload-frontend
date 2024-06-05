@@ -14,8 +14,7 @@ export class LoginService {
   constructor(
     private api: ApiService,
     private localStorageService: LocalStorageService,
-    private router: Router,
-    private commonService: CommonService
+    private router: Router
   ) {}
 
   login(username: string, password: string): Observable<any> {
@@ -38,7 +37,6 @@ export class LoginService {
   logout(): void {
     this.localStorageService.remove('jwt_token');
     this.router.navigate(['/login']);
-
   }
 
   isLoggedIn(): boolean {

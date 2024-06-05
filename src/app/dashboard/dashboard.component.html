@@ -1,16 +1,17 @@
-
 <nav-bar></nav-bar>
 <div class="grid grid-cols-1 sm:grid-cols-6">
     <div class="left-content col-span-2 p-6 border-r">
         <file-upload></file-upload>
         <h6 class="font-medium my-4">Previous Uploads</h6>
-        <file-list (fetchFileList)="listParamsChanges($event)" [list]="fileService.files | async" (fetchFileContent)="fetchFileContent($event)"></file-list>
+        <file-list (fetchFileList)="listParamsChanges($event)" [list]="fileService.files | async"
+            (fetchFileContent)="fetchFileContent($event)"></file-list>
     </div>
     <div class="right-content p-6 col-span-4">
         <div class="overflow-x-auto sm:rounded-lg">
             <h5 class="font-medium mb-6">File Content</h5>
             <search (searchTableData)="paramsChanged($event)"></search>
-            <data-table (getSortData)="paramsChanged($event)" [headers]="fileService.fileHeaders | async" [records]="fileService.fileContent | async"></data-table>
+            <data-table (getSortData)="paramsChanged($event)" [headers]="fileService.fileHeaders | async"
+                [records]="fileService.fileContent | async"></data-table>
             <pagination (pageChanged)="paramsChanged($event)" [pageData]="fileService.fileContent | async"></pagination>
         </div>
     </div>
